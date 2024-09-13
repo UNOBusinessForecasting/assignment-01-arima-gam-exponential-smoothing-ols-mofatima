@@ -12,3 +12,5 @@ model = sm.tsa.ARIMA(train_data['trips'], order=(1,1,1))
 modelFit = model.fit()
 
 print(modelFit.summary())
+
+
