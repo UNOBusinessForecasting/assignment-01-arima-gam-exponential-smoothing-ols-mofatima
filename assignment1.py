@@ -1,4 +1,4 @@
-Load librairies
+
 import pandas as pd
 import numpy as np
 from statsmodels.tsa.arima.model import ARIMA
@@ -7,7 +7,7 @@ from statsmodels.tsa.stattools import adfuller
 from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
 import matplotlib.pyplot as plt
 
-load train data
+
 train_data = pd.read_csv('https://github.com/dustywhite7/econ8310-assignment1/raw/main/assignment_data_train.csv')
 train_data.head()
 test_data = pd.read_csv('https://github.com/dustywhite7/econ8310-assignment1/raw/main/assignment_data_test.csv')
@@ -22,7 +22,7 @@ print(train_data.head())
 #Plot to check for seasonality or trends 
 train_data['trips'].plot()
 
-check for missing or na values
+#check for missing or na values
 train_data.isnull().sum()
 train_data.isna().sum()
 
@@ -31,7 +31,7 @@ result = adfuller(train_data['trips'])
 print(f'ADF Statistic: {result[0]}')
 print(f'p-value: {result[1]}') 
 
-Plot ACF and PACF
+#Plot ACF and PACF
 fig, axes = plt.subplots(1, 2, figsize=(16,6))
 plot_acf(train_data['trips'], lags=50, ax=axes[0])
 axes[0].set_title('ACF Plot')
@@ -39,23 +39,23 @@ plot_pacf(train_data['trips'], lags=50, ax=axes[1])
 axes[1].set_title('PACF Plot')
 plt.show()
 
-Fit an ARIMA model
+#Fit an ARIMA model
 p, d, q = 2, 0, 1
 model = ARIMA(train_data['trips'], order=(p, d, q))
 modelFit = model.fit()
 
-Print the model summary
+#Print the model summary
 print(modelFit.summary())
 
-Forecast for the test period (744 hours)
+#Forecast for the test period (744 hours)
 pred = modelFit.forecast(steps=744)
 pred
 
-Evalution of model
+#Evalution of model
 test_data['preicted_mean']= pred
 test_data 
 
-Save predictions
+#Save predictions
 pred = pd.DataFrame(pred, columns=['forecast'])
 pred.to_csv('predictions.csv', index=False)
 
