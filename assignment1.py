@@ -8,9 +8,16 @@ train_data = pd.read_csv(url_train)
 print(train_data.head())TEST
 
 
-model = sm.tsa.ARIMA(train_data['trips'], order=(1,1,1))
+from statsmodels.tsa.holtwinters import ExponentialSmoothing
+
+# Fit an Exponential Smoothing model
+model = ExponentialSmoothing(train_data['num_trips'], seasonal='add', seasonal_periods=24)
 modelFit = model.fit()
 
-print(modelFit.summary())
+# Forecast for January (744 hours)
+pred = modelFit.forecast(steps=744)
+
+# Print or inspect the predictions
+print(pred)
 
 
