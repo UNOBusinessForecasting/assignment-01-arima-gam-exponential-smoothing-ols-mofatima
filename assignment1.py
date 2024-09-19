@@ -36,7 +36,7 @@ import pickle
 
 # Save the modelFit (the fitted model) to a file
 with open('gam_model.pkl', 'wb') as f:
-    pickle.dump(modelFit, f)
+    pickle.dump(modelFit, f)
 
 
 
